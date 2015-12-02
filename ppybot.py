@@ -36,7 +36,7 @@ class Pybot():
     
     def __init__(self, folder, filename, options):
         self.folder = folder
-        self.name = filename[0:len(filename)-len(".txt")]
+        self.name, self.ext = os.path.splitext(filename)
         self.options = options
 
         self.outFile = "%s.out.xml" % os.path.join(options.logs_folder, self.name)
@@ -81,7 +81,7 @@ class Pybot():
             commands.append(self.outFile)
             
         update_options(commands, self.options.pybot_opts)
-        commands.append(self.name + ".txt")
+        commands.append(self.name + self.ext)
 
         self.log = open(self.logFile, "w")
         self.process = subprocess.Popen(commands, cwd=self.folder, stdout=self.log, stderr=self.log)
@@ -325,7 +325,9 @@ def get_test_files(folder, options):
     if options.tests_file != None:
         tests = [line.rstrip('\n') for line in open(options.tests_file)]
     elif config.TEST_REGEXP != None:
-        tests = [f for f in listdir(folder) if isfile(join(folder, f)) and re.match(config.TEST_REGEXP, f)]
+        tests = []
+        for root, dirs, files in os.walk(folder):
+            tests += [os.path.join(root, name) for name in files if re.match(config.TEST_REGEXP, name)]
     else:
         tests = []
         
