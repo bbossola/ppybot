@@ -6,13 +6,8 @@ import ppybot_config as config
 import re
 import xunitparser
 
-
-from os import listdir
 from os.path import isfile, join
-
 from optparse import OptionParser
-
-
 
 
 # encapsulate a running pybot process
@@ -271,7 +266,7 @@ def dump_bots(running_bots, queued_bots, done_bots):
 
     print "-------------------------------------------------\n"
 
-def parse_args():
+def parse_args(args=None):
 
     usage = "usage: %prog [options] folder_with_tests"
     parser = OptionParser(usage=usage)
@@ -296,7 +291,7 @@ def parse_args():
     parser.add_option("--pybot-opts", dest="pybot_opts", default=None, help="additional commands to send to pybot")
     parser.add_option("--rebot-opts", dest="rebot_opts", default=None, help="additional commands to send to rebot")
 
-    return parser.parse_args()
+    return parser.parse_args(args)
   
   
 def makeFixtureBot(folder, filename, options):
@@ -327,7 +322,7 @@ def get_test_files(folder, options):
     elif config.TEST_REGEXP != None:
         tests = []
         for root, dirs, files in os.walk(folder):
-            tests += [os.path.join(root, name) for name in files if re.match(config.TEST_REGEXP, name)]
+            tests += [os.path.join(root, name) for name in files if re.match(config.TEST_REGEXP, name) and not name.startswith("__init__.")]
     else:
         tests = []
         
@@ -337,9 +332,9 @@ def get_test_files(folder, options):
 # Main execution script
 #
 
-def main():
+def main(args=None):
 
-    (options, args) =  parse_args()
+    (options, args) =  parse_args(args)
     
     if len(args) == 0:
         print "A destination folder must be specified!"
@@ -420,5 +415,4 @@ def main():
 #
 
 if __name__ == "__main__":
-    main()
-
+    main(sys.argv[1:])
