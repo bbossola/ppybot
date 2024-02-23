@@ -1,6 +1,9 @@
 Introduction
 ============
 
+
+[![security status](https://qa.meterian.io/badge/pb/c41e99a4-9818-4afc-b682-64e4c1ac8816/security)](https://qa.meterian.io/projects/?pid=c41e99a4-9818-4afc-b682-64e4c1ac8816) [![stability status](https://qa.meterian.io/badge/pb/c41e99a4-9818-4afc-b682-64e4c1ac8816/stability)](https://qa.meterian.io/projects/?pid=c41e99a4-9818-4afc-b682-64e4c1ac8816) [![licensing status](https://qa.meterian.io/badge/pb/c41e99a4-9818-4afc-b682-64e4c1ac8816/licensing)](https://qa.meterian.io/projects/?pid=c41e99a4-9818-4afc-b682-64e4c1ac8816)
+
 This is a parallel launcher for [Pybot](http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#different-entry-points)
 (see the [Robot Framework](https://github.com/robotframework/robotframework))  that basically allows you to launch several pybot instances at the same time, saving a lot of time on your CI system.
 
